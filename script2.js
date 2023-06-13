@@ -3,11 +3,11 @@ const renderer = new THREE.WebGLRenderer({
 canvas: document.querySelector('#myCanvas')
 });
 renderer.setPixelRatio(window.devicePixelRatio);
-renderer.setSize(960, 540);
+renderer.setSize(window.innerWidth, window.innerHeight);
 
 let scene = new THREE.Scene();
 
-const camera = new THREE.PerspectiveCamera(45, 960 / 540);
+const camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight);
 camera.position.set(0, 0, +1000);
 
 const controls = new THREE.OrbitControls(camera, canvasElement);
@@ -19,7 +19,10 @@ const datGUIObj = {
     para:0
 };
 
-const gui = new dat.GUI();
+const gui = new dat.GUI({ autoPlace: true, width: 600});
+gui.domElement.id = 'gui';
+console.log(gui);
+
 gui.add(datGUIObj,'para',0, Math.PI);
 
 //
@@ -82,12 +85,9 @@ for(let i=0; i<detail; i++){
 
 
 
-console.log(geometry.attributes);
-
 const material = new THREE.MeshNormalMaterial( { color: 0xff0000, side: THREE.DoubleSide } );
 //material.flatShading = true;
 let mesh = new THREE.Mesh( geometry, material );
-console.log(material);
 scene.add(mesh);
 
 //
