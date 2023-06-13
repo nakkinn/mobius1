@@ -1,3 +1,9 @@
+function handleTouchMove(event) {
+    event.preventDefault();
+}
+//スクロール禁止
+document.addEventListener('touchmove', handleTouchMove, { passive: false });
+
 const canvasElement = document.querySelector('#myCanvas')
 const renderer = new THREE.WebGLRenderer({
 canvas: document.querySelector('#myCanvas')
