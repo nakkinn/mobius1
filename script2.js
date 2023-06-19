@@ -131,14 +131,30 @@ class mycurve extends THREE.Curve {
 }
 
 
+//カメラ
+const camera = new THREE.PerspectiveCamera(45, 960/540); //射影カメラ　引数：(視野角、アスペクト比)
+camera.position.set(0, 0, 1000);    //カメラ位置
+
 
 //レンダラー
 const canvasElement = document.querySelector('#myCanvas');
 const renderer = new THREE.WebGLRenderer({
     canvas: document.querySelector('#myCanvas')
 });
-renderer.setPixelRatio(window.devicePixelRatio);
-renderer.setSize(960, 540); //画面の横、縦サイズ
+
+Iresize();
+window.addEventListener('resize',Iresize);
+
+function Iresize(){
+    renderer.setPixelRatio(window.devicePixelRatio);
+    renderer.setSize(window.innerWidth, window.innerHeight);
+    camera.aspect = window.innerWidth / window.innerHeight;
+    camera.updateProjectionMatrix();
+}
+
+
+//マウスによる視点操作
+const controls = new THREE.OrbitControls(camera, canvasElement);    
 
 
 //クリッピング
@@ -158,10 +174,7 @@ renderer.clippingPlanes.push(cplane1,cplane2,cplane3,cplane4,cplane5,cplane6);
 const scene = new THREE.Scene();
 
 
-//カメラ
-const camera = new THREE.PerspectiveCamera(45, 960/540); //射影カメラ　引数：(視野角、アスペクト比)
-camera.position.set(0, 0, 1000);    //カメラ位置
-const controls = new THREE.OrbitControls(camera, canvasElement);    //マウスによる視点操作
+
 
 
 //スライダー
